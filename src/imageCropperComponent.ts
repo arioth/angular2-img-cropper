@@ -42,7 +42,10 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
     private isCropPositionUpdateNeeded:boolean;
 
-    constructor(renderer:Renderer) {
+    constructor(
+      renderer:Renderer,
+      private elementRef: ElementRef
+    ) {
         this.renderer = renderer;
     }
 
@@ -55,8 +58,13 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
 
         this.renderer.setElementAttribute(canvas, 'class', this.settings.cropperClass);
 
-        if (!this.settings.dynamicSizing) {
+        if (!this.settings.dynamicSizing && !this.settings.autoResize) {
             this.renderer.setElementAttribute(canvas, 'width', this.settings.canvasWidth.toString());
+            this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
+        } else if (this.settings.autoResize) {
+            const width = this.elementRef.nativeElement.offsetWidth;
+
+            this.renderer.setElementAttribute(canvas, 'width', width.toString());
             this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
         } else {
             window.addEventListener('resize', () => {
@@ -87,6 +95,14 @@ export class ImageCropperComponent implements AfterViewInit, OnChanges {
         if (changes.inputImage) {
           this.setImage(changes.inputImage.currentValue);
         }
+    }
+
+    public resizeCanvas() {
+        const width = this.elementRef.nativeElement.offsetWidth;
+        const canvas: HTMLCanvasElement = this.cropcanvas.nativeElement;
+
+        this.renderer.setElementAttribute(canvas, 'width', width.toString());
+        this.renderer.setElementAttribute(canvas, 'height', this.settings.canvasHeight.toString());
     }
 
     public onTouchMove(event:TouchEvent):void {

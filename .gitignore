@@ -24,6 +24,8 @@ dist/img-cropper-test-app.js.map
 !karma-test-shim.js
 !make.js
 !bundles/*.js
+**/*.metadata.json
+**/*.ngsummary.json
 
 #################
 ## JetBrains

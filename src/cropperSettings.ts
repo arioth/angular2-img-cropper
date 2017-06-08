@@ -25,6 +25,7 @@ export class CropperSettings implements ICropperSettings {
     public canvasHeight: number = 300;
 
     public dynamicSizing: boolean = false;
+    public autoResize: boolean = false;
     public cropperClass: string;
     public croppingClass: string;
 

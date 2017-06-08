@@ -1,5 +1,5 @@
 {
-  "name": "ng2-img-cropper",
+  "name": "ng2-img-cropper-auto-resize",
   "version": "0.8.6",
   "description": "Angular2 Image Cropper Component",
   "repository": {
